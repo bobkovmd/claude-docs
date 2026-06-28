@@ -1,53 +1,174 @@
-# Prompt Engineering Console Tools
+Best practices
+/
+Prompt engineering
+Console prompting tools
+Copy page
+
 
-## Overview
+The Claude Console offers a suite of tools to help you build and refine prompts. This page walks through them in the order you'll typically use them: generating a first draft, adding templates and variables, then improving an existing prompt.
 
-The Claude Console provides an integrated suite of tools for building, refining, and deploying prompts. The typical workflow follows three stages: **generate → template → improve**.
+
+Prompt generator
+
 
-## 1. Prompt Generator
+The prompt generator is compatible with all Claude models, including those with extended thinking capabilities. For prompting tips specific to extended thinking models, see the extended thinking prompting tips.
 
-- **Purpose:** Solves the "blank page problem" by guiding Claude to create high-quality, task-specific prompt templates following Anthropic's best practices.
-- **Compatibility:** Works with all Claude models, including extended thinking models.
-- **Resources:** Available directly in the Console dashboard.
+Sometimes, the hardest part of using an AI model is figuring out how to prompt it effectively. The prompt generator guides Claude to create high-quality prompt templates tailored to your specific tasks, following many of our prompt engineering best practices.
 
-## 2. Prompt Templates & Variables
+The prompt generator is particularly useful for solving the "blank page problem"—it gives you a jumping-off point for further testing and iteration.
 
-### Core Concept
+
+Try the prompt generator now directly on the Console.
 
-API calls combine two content types:
-- **Fixed content** — Static instructions/context constant across interactions
-- **Variable content** — Dynamic elements (user inputs, RAG content, conversation history, tool results)
+If you're interested in analyzing the underlying prompt and architecture, check out our prompt generator Google Colab notebook. To run the Colab notebook, you'll need an API key.
 
-### Syntax
+
+Prompt templates and variables
 
-Placeholders use **double brackets**: `{{variable_name}}`
+When deploying an LLM-based application with Claude, your API calls will typically consist of two types of content:
 
-### Key Benefits
-- **Consistency** — uniform prompt structure across calls
-- **Efficiency** — swap variables without rewriting prompts
-- **Testability** — quickly test edge cases
-- **Scalability** — simplifies prompt management
-- **Version control** — track changes separately from dynamic inputs
+Fixed content: Static instructions or context that remain constant across multiple interactions
+Variable content: Dynamic elements that change with each request or conversation, such as:
+User inputs
+Retrieved content for Retrieval-Augmented Generation (RAG)
+Conversation context such as user account history
+System-generated data such as tool use results fed in from other independent calls to Claude
 
-> **Note:** `claude.ai` does **not** currently support prompt templates or variables.
+A prompt template combines these fixed and variable parts, using placeholders for the dynamic content. In the Claude Console, these placeholders are denoted with {{double brackets}}, making them easily identifiable and allowing for quick testing of different values.
 
-## 3. Prompt Improver
+You should use prompt templates and variables when you expect any part of your prompt to be repeated in another call to Claude (via the API or the Claude Console. claude.ai currently does not support prompt templates or variables).
 
-### Purpose
-Automated analysis and enhancement of prompts, optimized for **complex tasks requiring high accuracy**.
+Prompt templates offer several benefits:
 
-### How It Works (4-Step Process)
+Consistency: Ensure a consistent structure for your prompts across multiple interactions
+Efficiency: Easily swap out variable content without rewriting the entire prompt
+Testability: Quickly test different inputs and edge cases by changing only the variable portion
+Scalability: Simplify prompt management as your application grows in complexity
+Version control: Easily track changes to your prompt structure over time by keeping tabs only on the core part of your prompt, separate from dynamic inputs
 
-1. **Example identification** — Locates and extracts examples from the template
-2. **Initial draft** — Creates a structured template with clear sections and XML tags
-3. **Chain of thought refinement** — Adds detailed reasoning instructions
-4. **Example enhancement** — Updates examples to demonstrate the new reasoning process
+The Console uses prompt templates and variables to power its tooling:
 
-### Output Features
-- Detailed chain-of-thought instructions
-- Clear XML-tagged organization
-- Standardized example formatting with step-by-step reasoning
-- Strategic prefills guiding initial responses
+Prompt generator: Decides what variables your prompt needs and includes them in the template it outputs
+Prompt improver: Takes your existing template, including all variables, and maintains them in the improved template it outputs
+Evaluation tool: Allows you to easily test, scale, and track versions of your prompts by separating the variable and fixed portions of your prompt template
+
+Example prompt template
 
-### Test Case Generator
-Generate sample inputs → Get Claude's responses → Edit to match ideal outputs → Add polished examples
+Consider a simple application that translates English text to Spanish. The translated text would be variable since it changes between users or calls to Claude. You might use this prompt template:
+
+Translate this text from English to Spanish: {{text}}
+
+
+To level up your prompt variables, wrap them in XML tags for clearer structure.
+
+Prompt improver
+
+
+The prompt improver is compatible with all Claude models, including those with extended thinking capabilities. For prompting tips specific to extended thinking models, see the extended thinking prompting tips.
+
+The prompt improver helps you quickly iterate and improve your prompts through automated analysis and enhancement. It excels at making prompts more robust for complex tasks that require high accuracy.
+
+
+Before you begin
+
+You'll need:
+
+A prompt template (see Prompt templates and variables above)
+Feedback on current issues with Claude's outputs (optional but recommended)
+Example inputs and ideal outputs (optional but recommended)
+
+How the prompt improver works
+
+The prompt improver enhances your prompts in 4 steps:
+
+Example identification: Locates and extracts examples from your prompt template
+Initial draft: Creates a structured template with clear sections and XML tags
+Chain of thought refinement: Adds and refines detailed reasoning instructions
+Example enhancement: Updates examples to demonstrate the new reasoning process
+
+You can watch these steps happen in real-time in the improvement modal.
+
+
+What you get
+
+The prompt improver generates templates with:
+
+Detailed chain-of-thought instructions that guide Claude's reasoning process and typically improve its performance
+Clear organization using XML tags to separate different components
+Standardized example formatting that demonstrates step-by-step reasoning from input to output
+Strategic prefills that guide Claude's initial responses
+
+
+While examples appear separately in the Workbench UI, they're included at the start of the first user message in the actual API call. View the raw format by clicking "</> Get Code" or insert examples as raw text via the Examples box.
+
+
+How to use the prompt improver
+Submit your prompt template
+Add any feedback about issues with Claude's current outputs (e.g., "summaries are too basic for expert audiences")
+Include example inputs and ideal outputs
+Review the improved prompt
+
+Generate test examples
+
+Don't have examples yet? Use the Test Case Generator to:
+
+Generate sample inputs
+Get Claude's responses
+Edit the responses to match your ideal outputs
+Add the polished examples to your prompt
+
+When to use the prompt improver
+
+The prompt improver works best for:
+
+Complex tasks requiring detailed reasoning
+Situations where accuracy is more important than speed
+Problems where Claude's current outputs need significant improvement
+
+
+For latency or cost-sensitive applications, consider using simpler prompts. The prompt improver creates templates that produce longer, more thorough, but slower responses.
+
+
+Example improvement
+
+Here's how the prompt improver enhances a basic classification prompt:
+
+Original prompt
+Improved prompt
+
+Notice how the improved prompt:
+
+Adds clear step-by-step reasoning instructions
+Uses XML tags to organize content
+Provides explicit output formatting requirements
+Guides Claude through the analysis process
+
+Troubleshooting
+
+Common issues and solutions:
+
+Examples not appearing in output: Check that examples are properly formatted with XML tags and appear at the start of the first user message
+Chain of thought too verbose: Add specific instructions about desired output length and level of detail
+Reasoning steps don't match your needs: Modify the steps section to match your specific use case
+
+Next steps
+
+Start prompt engineering
+
+Learn core techniques with worked examples.
+
+
+Test your prompts
+
+Use the evaluation tool to test your improved prompts.
+
+
+GitHub prompting tutorial
+
+
+An example-filled tutorial that covers the prompt engineering concepts found in our docs.
+
+Was this page helpful?
+
+
+
