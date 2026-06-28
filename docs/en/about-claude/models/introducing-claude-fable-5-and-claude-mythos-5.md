@@ -1,147 +1,132 @@
-Models & pricing
-/
-Models
-Introducing Claude Fable 5 and Claude Mythos 5
-Copy page
-
-Claude Fable 5 and Claude Mythos 5 capabilities, API changes, and availability.
+# Introducing Claude Fable 5 and Claude Mythos 5
 
-Claude Fable 5 is Anthropic's most capable widely released model, built for the most demanding reasoning and long-horizon agentic work. Claude Mythos 5 shares the same capabilities and is available only in limited release through Project Glasswing.
+Claude Fable 5 is Anthropic's most capable widely released model, built for the most demanding reasoning and long-horizon agentic work. Claude Mythos 5 shares the same capabilities and is available only in limited release through [Project Glasswing](https://anthropic.com/glasswing).
 
-The headline change for integrations: Claude Fable 5 includes safety classifiers that can decline requests. Claude Mythos 5 does not include these classifiers. If your integration calls Claude Fable 5, plan for three changes: new response handling for refusals, fallback options for retrying on another Claude model, and new billing rules. Refusals, fallback, and billing on Claude Fable 5 summarizes all three.
+The headline change for integrations: Claude Fable 5 includes safety classifiers that can decline requests. Claude Mythos 5 does not include these classifiers. If your integration calls Claude Fable 5, plan for three changes: new response handling for refusals, fallback options for retrying on another Claude model, and new billing rules. [Refusals, fallback, and billing on Claude Fable 5](#refusals-fallback-and-billing-on-claude-fable-5) summarizes all three.
 
-
-Models
-Model	API model ID	Description
-Claude Fable 5	claude-fable-5	Anthropic's most capable widely released model, for the most demanding reasoning and long-horizon agentic work
-Claude Mythos 5	claude-mythos-5	Shares Claude Fable 5's capabilities without the safety classifiers. Available through Project Glasswing. Successor to Claude Mythos Preview.
+## Models
+
+| Model | API model ID | Description |
+| --- | --- | --- |
+| Claude Fable 5 | `claude-fable-5` | Anthropic's most capable widely released model, for the most demanding reasoning and long-horizon agentic work |
+| Claude Mythos 5 | `claude-mythos-5` | Shares Claude Fable 5's capabilities without the safety classifiers. Available through Project Glasswing. Successor to Claude Mythos Preview. |
 
 Claude Fable 5 and Claude Mythos 5 share the same specs and pricing:
 
-Context window and output: a 1M token context window by default, and up to 128k output tokens per request.
-Pricing: $10 per million input tokens and $50 per million output tokens.
+- **Context window and output:** a [1M token context window](/docs/en/build-with-claude/context-windows) by default, and up to 128k output tokens per request.
 
-For specs across all current models, see the models overview.
+- **Pricing:** $10 per million input tokens and $50 per million output tokens.
 
-
-Refusals, fallback, and billing on Claude Fable 5
+For specs across all current models, see the [models overview](/docs/en/about-claude/models/overview).
+
+## Refusals, fallback, and billing on Claude Fable 5
 
 Claude Fable 5 includes safety classifiers that can decline certain requests. Claude Mythos 5 does not include these classifiers, so this section applies to Claude Fable 5 only. The following sections summarize what refusals mean for your integration; each links to the full guide.
 
-
-Refusals
+### Refusals
 
-When Claude Fable 5 declines a request, the Messages API returns stop_reason: "refusal" as a successful HTTP 200 response, not an error. The response also reports which classifier declined the request. See Refusals and fallback for response shapes and handling guidance.
+When Claude Fable 5 declines a request, the Messages API returns `stop_reason: "refusal"` as a successful HTTP 200 response, not an error. The response also reports which classifier declined the request. See [Refusals and fallback](/docs/en/build-with-claude/refusals-and-fallback) for response shapes and handling guidance.
 
-
-Fallback
+### Fallback
 
 A request that Claude Fable 5 refuses can usually be served by another Claude model. There are three ways to retry:
 
-Server-side: Pass the fallbacks parameter to have the API retry for you (in beta on the Claude API and Claude Platform on AWS). See Server-side fallback.
-Client-side: Use the SDK middleware (TypeScript, Python, Go, Java, and C#) to retry from the client on any platform. See Client-side fallback.
-Manual: Build the retry yourself, on any platform and in any language. See Fallback credit.
-
-Billing
+- **Server-side:** Pass the `fallbacks` parameter to have the API retry for you (in beta on the Claude API and Claude Platform on AWS). See [Server-side fallback](/docs/en/build-with-claude/refusals-and-fallback#server-side-fallback).
 
-You are not billed for a request that is refused before any output is generated. When you retry on another model, fallback credit refunds the prompt-cache cost of switching, so you avoid paying that cost twice.
+- **Client-side:** Use the [SDK middleware](/docs/en/cli-sdks-libraries/middleware) (TypeScript, Python, Go, Java, and C#) to retry from the client on any platform. See [Client-side fallback](/docs/en/build-with-claude/refusals-and-fallback#client-side-fallback).
 
-
-Availability
+- **Manual:** Build the retry yourself, on any platform and in any language. See [Fallback credit](/docs/en/build-with-claude/fallback-credit).
+
+### Billing
+
+You are not billed for a request that is refused before any output is generated. When you retry on another model, [fallback credit](/docs/en/build-with-claude/fallback-credit) refunds the prompt-cache cost of switching, so you avoid paying that cost twice.
+
+## Availability
 
 Claude Fable 5 and Claude Mythos 5 both become available on June 9, 2026:
 
-Claude Fable 5 is generally available on the Claude API, Claude Platform on AWS, Amazon Bedrock, Google Cloud, and Microsoft Foundry.
-Claude Mythos 5 is not generally available: it is offered in limited availability to approved customers in Project Glasswing. For access, contact your Anthropic, AWS, or Google Cloud account team. Customers without access to Claude Mythos 5 can use Claude Fable 5, which is generally available and offers the same capabilities.
+- **Claude Fable 5** is generally available on the Claude API, [Claude Platform on AWS](/docs/en/build-with-claude/claude-platform-on-aws), [Amazon Bedrock](/docs/en/build-with-claude/claude-in-amazon-bedrock), [Google Cloud](/docs/en/build-with-claude/claude-on-vertex-ai), and [Microsoft Foundry](/docs/en/build-with-claude/claude-in-microsoft-foundry).
 
-Claude Fable 5 and Claude Mythos 5 carry 30-day data retention and are not available under zero data retention: both are designated Covered Models. See Model-specific data retention requirements.
+- **Claude Mythos 5** is not generally available: it is offered in limited availability to approved customers in [Project Glasswing](https://anthropic.com/glasswing). For access, contact your Anthropic, AWS, or Google Cloud account team. Customers without access to Claude Mythos 5 can use Claude Fable 5, which is generally available and offers the same capabilities.
 
-
-Working with Claude Fable 5 and Claude Mythos 5
-
-Prompting
+Claude Fable 5 and Claude Mythos 5 carry 30-day data retention and are not available under zero data retention: both are designated [Covered Models](https://support.claude.com/en/articles/15425695). See [Model-specific data retention requirements](/docs/en/manage-claude/api-and-data-retention#model-specific-data-retention-requirements).
 
-Claude Fable 5 responds to the same prompting techniques as other Claude models, with a few differences in how to structure long-context prompts and reasoning instructions. See Prompting Claude Fable 5.
+## Working with Claude Fable 5 and Claude Mythos 5
 
-
-Messages API on Claude Fable 5 and Claude Mythos 5
-
+### Prompting
+
+Claude Fable 5 responds to the same prompting techniques as other Claude models, with a few differences in how to structure long-context prompts and reasoning instructions. See [Prompting Claude Fable 5](/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5).
+
+## Messages API on Claude Fable 5 and Claude Mythos 5
 
 The behaviors in this section are specific to Claude Fable 5 and Claude Mythos 5. The Messages API is unchanged for Opus, Sonnet, and Haiku models.
 
-
-Adaptive thinking is always on
+### Adaptive thinking is always on
 
-Adaptive thinking is the only thinking mode on Claude Fable 5 and Claude Mythos 5. It applies whenever the thinking parameter is unset. thinking: {"type": "disabled"} is not supported. Use the effort parameter to control thinking depth.
+[Adaptive thinking](/docs/en/build-with-claude/adaptive-thinking) is the only thinking mode on Claude Fable 5 and Claude Mythos 5. It applies whenever the `thinking` parameter is unset. `thinking: {"type": "disabled"}` is not supported. Use the [effort parameter](/docs/en/build-with-claude/effort) to control thinking depth.
 
-
-Raw thinking content is never returned
+### Raw thinking content is never returned
 
-The raw chain of thought is never returned on Claude Fable 5 and Claude Mythos 5. The thinking.display setting controls what thinking blocks contain instead:
+The raw chain of thought is never returned on Claude Fable 5 and Claude Mythos 5. The `thinking.display` setting controls what thinking blocks contain instead:
 
-"summarized" returns thinking blocks with a readable summary of the reasoning.
-"omitted" (the default) returns thinking blocks with an empty thinking field.
+- `"summarized"` returns thinking blocks with a readable summary of the reasoning.
 
-Pass thinking blocks back unchanged in multi-turn conversations on the same model. See thinking output on Claude Fable 5 and Claude Mythos 5 for cross-model handling.
+- `"omitted"` (the default) returns thinking blocks with an empty `thinking` field.
 
-
-Supported features
+Pass thinking blocks back unchanged in multi-turn conversations on the same model. See [thinking output on Claude Fable 5 and Claude Mythos 5](/docs/en/build-with-claude/adaptive-thinking#thinking-output-on-claude-fable-5-and-claude-mythos-5) for cross-model handling.
+
+## Supported features
 
 At launch, Claude Fable 5 and Claude Mythos 5 support:
 
-Effort
-Task budgets (beta: set the task-budgets-2026-03-13 header)
-The memory tool
-Code execution
-Programmatic tool calling
-Tool result clearing through context editing (beta: set the context-management-2025-06-27 header)
-Compaction
-Vision
-
-Migrating from earlier models
+- [Effort](/docs/en/build-with-claude/effort)
+
+- [Task budgets](/docs/en/build-with-claude/task-budgets) (beta: set the `task-budgets-2026-03-13` header)
+
+- The [memory tool](/docs/en/agents-and-tools/tool-use/memory-tool)
+
+- [Code execution](/docs/en/agents-and-tools/tool-use/code-execution-tool)
+
+- [Programmatic tool calling](/docs/en/agents-and-tools/tool-use/programmatic-tool-calling)
+
+- Tool result clearing through [context editing](/docs/en/build-with-claude/context-editing) (beta: set the `context-management-2025-06-27` header)
+
+- [Compaction](/docs/en/build-with-claude/compaction)
+
+- [Vision](/docs/en/build-with-claude/vision)
+
+## Migrating from earlier models
 
 Step-by-step instructions live in the migration guide:
 
-From Claude Mythos Preview: see Migrating from Claude Mythos Preview to Claude Mythos 5.
-From Claude Opus 4.8: see Migrating from Claude Opus 4.8 to Claude Fable 5.
-
-Next steps
-
-Migration guide
+- From Claude Mythos Preview: see [Migrating from Claude Mythos Preview to Claude Mythos 5](/docs/en/about-claude/models/migration-guide#migrating-from-claude-mythos-preview).
 
+- From Claude Opus 4.8: see [Migrating from Claude Opus 4.8 to Claude Fable 5](/docs/en/about-claude/models/migration-guide#migrating-from-claude-opus-48).
+
+## Next steps
+
+[Migration guide
 Step-by-step upgrade instructions from Claude Opus 4.8 and Claude Mythos Preview.
 
-
-Models overview
-
+](/docs/en/about-claude/models/migration-guide)[Models overview
 Specs and comparison for all current Claude models.
 
-Adaptive thinking
-
+](/docs/en/about-claude/models/overview)[Adaptive thinking
 The only thinking mode on Claude Fable 5 and Claude Mythos 5.
 
-Refusals and fallback
-
+](/docs/en/build-with-claude/adaptive-thinking)[Refusals and fallback
 How Claude Fable 5 declines requests, and how to retry on another model.
 
-Fallback credit
-
+](/docs/en/build-with-claude/refusals-and-fallback)[Fallback credit
 Avoid paying the prompt-cache cost twice on a retry.
 
-Fallback and billing cookbook
-
-
+](/docs/en/build-with-claude/fallback-credit)[Fallback and billing cookbook
 A worked end-to-end example of refusal handling, fallback, and billing.
 
-Effort
-
+](https://platform.claude.com/cookbook/fable-5-fallback-billing-guide)[Effort
 Control thinking depth and cost on Claude Fable 5 and Claude Mythos 5.
 
-Prompting Claude Fable 5
-
+](/docs/en/build-with-claude/effort)[Prompting Claude Fable 5
 Fable-specific prompting techniques.
 
-Was this page helpful?
-
-
-
+](/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5)

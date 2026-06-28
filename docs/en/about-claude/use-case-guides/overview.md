@@ -1,31 +1,17 @@
-Best practices
-/
-Use cases
-Guides to common use cases
-Copy page
-
+# Guides to common use cases
 
 Claude is designed to excel in a variety of tasks. Explore these in-depth production guides to learn how to build common use cases with Claude.
 
-Ticket routing
-
+[Ticket routing
 Best practices for using Claude to classify and route customer support tickets at scale.
 
-Customer support agent
-
+](/docs/en/about-claude/use-case-guides/ticket-routing)[Customer support agent
 Build intelligent, context-aware chatbots with Claude to enhance customer support interactions.
 
-
-Content moderation
-
+](/docs/en/about-claude/use-case-guides/customer-support-chat)[Content moderation
 Techniques and best practices for using Claude to perform content filtering and general content moderation.
 
-
-Legal summarization
-
+](/docs/en/about-claude/use-case-guides/content-moderation)[Legal summarization
 Summarize legal documents using Claude to extract key information and expedite research.
 
-Was this page helpful?
-
-
-
+](/docs/en/about-claude/use-case-guides/legal-summarization)
